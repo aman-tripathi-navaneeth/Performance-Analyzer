@@ -1,0 +1,247 @@
+/* Chart Components Styles */
+
+/* Chart Container */
+.chart-container {
+  width: 100%;
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Loading State */
+.chart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+  color: #64748b;
+}
+
+.chart-loading .loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.chart-loading p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.chart-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.5rem;
+  color: #ef4444;
+  text-align: center;
+  padding: 2rem;
+}
+
+.chart-error .error-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-error .error-message {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #dc2626;
+}
+
+/* Empty State */
+.chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.5rem;
+  color: #64748b;
+  text-align: center;
+  padding: 2rem;
+}
+
+.chart-empty .empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.chart-empty .empty-message {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.chart-empty .empty-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Custom Tooltip Styles */
+.chart-tooltip {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  font-size: 0.875rem;
+  min-width: 120px;
+}
+
+.tooltip-label {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.25rem;
+}
+
+.tooltip-value {
+  margin: 0 0 0.25rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.tooltip-info {
+  margin: 0 0 0.25rem 0;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.tooltip-info:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-grade {
+  margin: 0.25rem 0 0 0;
+  padding: 0.25rem 0.5rem;
+  background-color: #f1f5f9;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+}
+
+/* Recharts Override Styles */
+.recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  fill: #64748b;
+}
+
+.recharts-legend-wrapper {
+  padding-top: 1rem !important;
+}
+
+.recharts-legend-item-text {
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+.recharts-tooltip-wrapper {
+  z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    font-size: 0.75rem;
+  }
+  
+  .chart-tooltip {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    min-width: 100px;
+  }
+  
+  .tooltip-value {
+    font-size: 0.875rem;
+  }
+  
+  .chart-loading p,
+  .chart-error .error-message,
+  .chart-empty .empty-message {
+    font-size: 0.75rem;
+  }
+  
+  .chart-empty .empty-icon,
+  .chart-error .error-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-empty,
+  .chart-error,
+  .chart-loading {
+    padding: 1rem;
+  }
+  
+  .chart-tooltip {
+    font-size: 0.7rem;
+    padding: 0.4rem;
+    min-width: 80px;
+  }
+  
+  .tooltip-value {
+    font-size: 0.8rem;
+  }
+  
+  .tooltip-info {
+    font-size: 0.65rem;
+  }
+}
+
+/* Animation for chart appearance */
+.chart-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility improvements */
+.chart-container:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .chart-container {
+    break-inside: avoid;
+    background-color: #ffffff !important;
+  }
+  
+  .chart-tooltip {
+    display: none;
+  }
+}
