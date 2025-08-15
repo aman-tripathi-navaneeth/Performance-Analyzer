@@ -1,0 +1,624 @@
+/* AdvancedCharts.css - Premium styling for chart components */
+
+/* Chart container animations with glassmorphism */
+.chart-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  z-index: -1;
+}
+
+.chart-container:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.chart-container:hover::before {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+}
+
+/* Enhanced chart wrapper with premium styling */
+.recharts-wrapper {
+  transition: all 0.3s ease-in-out;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.recharts-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(59, 130, 246, 0.02) 0%, 
+    rgba(124, 58, 237, 0.02) 50%, 
+    rgba(16, 185, 129, 0.02) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Premium tooltip styling with glassmorphism */
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.15));
+  z-index: 1000;
+}
+
+.recharts-default-tooltip {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  padding: 16px 20px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+
+.recharts-tooltip-label {
+  color: #1f2937 !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  font-size: 15px !important;
+}
+
+.recharts-tooltip-item {
+  color: #64748b !important;
+  font-weight: 600 !important;
+  padding: 2px 0 !important;
+}
+
+/* Enhanced legend styling */
+.recharts-legend-wrapper {
+  transition: all 0.2s ease-in-out;
+  padding: 12px 0 !important;
+}
+
+.recharts-legend-item {
+  transition: all 0.2s ease-in-out;
+  margin: 0 16px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  cursor: pointer;
+}
+
+.recharts-legend-item:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.recharts-legend-item-text {
+  font-weight: 600 !important;
+  color: #374151 !important;
+}
+
+/* Enhanced grid lines with subtle animation */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(226, 232, 240, 0.6) !important;
+  stroke-width: 1 !important;
+  stroke-opacity: 0.4;
+  transition: all 0.2s ease-in-out;
+}
+
+.recharts-cartesian-grid:hover line {
+  stroke-opacity: 0.7;
+  stroke: rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Enhanced axis styling */
+.recharts-xAxis .recharts-cartesian-axis-tick-value,
+.recharts-yAxis .recharts-cartesian-axis-tick-value {
+  fill: #64748b !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.recharts-xAxis .recharts-cartesian-axis-tick-value:hover,
+.recharts-yAxis .recharts-cartesian-axis-tick-value:hover {
+  fill: #1f2937 !important;
+  font-weight: 700 !important;
+}
+
+.recharts-cartesian-axis-line {
+  stroke: rgba(226, 232, 240, 0.8) !important;
+  stroke-width: 2 !important;
+}
+
+.recharts-cartesian-axis-tick-line {
+  stroke: rgba(226, 232, 240, 0.6) !important;
+  stroke-width: 1 !important;
+}
+
+/* Enhanced bar styling with gradients and animations */
+.recharts-bar-rectangle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-bar-rectangle:hover {
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) brightness(1.05);
+  transform: scaleY(1.02);
+}
+
+/* Enhanced line styling with glow effects */
+.recharts-line-curve {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-line-curve:hover {
+  stroke-width: 5 !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 8px currentColor);
+}
+
+.recharts-line .recharts-curve {
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.3));
+}
+
+/* Enhanced dot styling with pulse animation */
+.recharts-dot {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-dot:hover {
+  r: 8 !important;
+  stroke-width: 4 !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 12px currentColor);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.recharts-active-dot {
+  animation: pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Enhanced area chart styling */
+.recharts-area {
+  transition: all 0.3s ease-in-out;
+}
+
+.recharts-area:hover {
+  filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Enhanced radar styling with glow */
+.recharts-polar-grid-angle-line {
+  stroke: rgba(226, 232, 240, 0.6) !important;
+  stroke-width: 1 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.recharts-polar-grid-concentric-circle {
+  stroke: rgba(226, 232, 240, 0.4) !important;
+  stroke-width: 1 !important;
+}
+
+.recharts-radar-polygon {
+  transition: all 0.3s ease-in-out;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-radar-polygon:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 8px currentColor);
+}
+
+/* Enhanced pie chart styling with 3D effects */
+.recharts-pie-sector {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-pie-sector:hover {
+  opacity: 0.9;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15)) brightness(1.1);
+  transform: scale(1.02);
+}
+
+.recharts-pie-label-text {
+  font-weight: 700 !important;
+  fill: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 13px !important;
+}
+
+/* Enhanced scatter plot styling */
+.recharts-scatter-symbol {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.recharts-scatter-symbol:hover {
+  r: 10 !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 8px currentColor);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Premium loading animation */
+.chart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #64748b;
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 16px;
+  padding: 48px;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(226, 232, 240, 0.3);
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #3b82f6, #1d4ed8, #7c3aed, #f093fb, #3b82f6);
+  animation: spin 1.2s linear infinite, glow 2s ease-in-out infinite alternate;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.loading-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow {
+  0% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  100% { 
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+  }
+}
+
+/* Enhanced error state styling */
+.chart-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #ef4444;
+  background: rgba(254, 242, 242, 0.8);
+  border-radius: 16px;
+  padding: 48px;
+}
+
+.error-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.error-message {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #dc2626;
+}
+
+/* Enhanced empty state styling */
+.chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #64748b;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 16px;
+  padding: 48px;
+}
+
+.empty-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+  opacity: 0.6;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.empty-message {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #475569;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  text-align: center;
+  color: #64748b;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* Chart title and subtitle enhancements */
+.chart-header {
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-bottom: 2px solid rgba(226, 232, 240, 0.3);
+}
+
+.chart-title {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  color: #1f2937 !important;
+  margin: 0 0 8px 0 !important;
+  background: linear-gradient(135deg, #374151, #1f2937) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.chart-subtitle {
+  font-size: 0.95rem !important;
+  color: #64748b !important;
+  margin: 0 !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+/* Responsive chart adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  
+  .recharts-wrapper {
+    font-size: 11px;
+    border-radius: 12px;
+  }
+  
+  .recharts-legend-wrapper {
+    font-size: 12px;
+  }
+
+  .chart-title {
+    font-size: 1.3rem !important;
+  }
+
+  .chart-subtitle {
+    font-size: 0.9rem !important;
+  }
+  
+  .recharts-tooltip-wrapper {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .chart-title {
+    font-size: 1.1rem !important;
+  }
+
+  .chart-subtitle {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* Dark mode support with premium styling */
+@media (prefers-color-scheme: dark) {
+  .chart-container {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(71, 85, 105, 0.3);
+  }
+  
+  .chart-title {
+    color: #f8fafc !important;
+    background: linear-gradient(135deg, #e2e8f0, #f8fafc) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  .chart-subtitle {
+    color: #cbd5e1 !important;
+  }
+  
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: rgba(71, 85, 105, 0.4) !important;
+  }
+  
+  .recharts-xAxis .recharts-cartesian-axis-tick-value,
+  .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    fill: #cbd5e1 !important;
+  }
+
+  .recharts-tooltip-label {
+    color: #f8fafc !important;
+  }
+
+  .recharts-tooltip-item {
+    color: #cbd5e1 !important;
+  }
+
+  .recharts-default-tooltip {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border-color: rgba(71, 85, 105, 0.3) !important;
+  }
+}
+
+/* Accessibility improvements */
+.recharts-wrapper:focus {
+  outline: 3px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+.recharts-legend-item:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: #000000 !important;
+    stroke-opacity: 0.7 !important;
+    stroke-width: 2 !important;
+  }
+  
+  .recharts-xAxis .recharts-cartesian-axis-tick-value,
+  .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    fill: #000000 !important;
+    font-weight: 700 !important;
+  }
+
+  .chart-title {
+    color: #000000 !important;
+    background: none !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+
+  .chart-subtitle {
+    color: #333333 !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .chart-container {
+    background: white;
+    border: 1px solid #000;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  .chart-container:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Performance optimizations */
+.recharts-wrapper * {
+  will-change: auto;
+}
+
+.recharts-wrapper:hover * {
+  will-change: transform, opacity;
+}
+
+/* Chart-specific color enhancements */
+.recharts-bar-rectangle[fill="#3B82F6"] {
+  fill: url(#blueGradient) !important;
+}
+
+.recharts-bar-rectangle[fill="#10B981"] {
+  fill: url(#greenGradient) !important;
+}
+
+.recharts-bar-rectangle[fill="#F59E0B"] {
+  fill: url(#orangeGradient) !important;
+}
+
+.recharts-bar-rectangle[fill="#EF4444"] {
+  fill: url(#redGradient) !important;
+}
+
+/* SVG Gradients for bars */
+.recharts-wrapper svg defs {
+  background: transparent;
+}
+
+/* Custom scrollbar for chart areas */
+.chart-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.chart-container::-webkit-scrollbar-track {
+  background: rgba(226, 232, 240, 0.3);
+  border-radius: 4px;
+}
+
+.chart-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chart-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.chart-container::-webkit-scrollbar-corner {
+  background: rgba(226, 232, 240, 0.3);
+}

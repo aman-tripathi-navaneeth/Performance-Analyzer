@@ -1,0 +1,246 @@
+/* Performance Comparison Dashboard Styles */
+
+.performance-comparison {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Smooth transitions for chart type changes */
+.chart-container {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Progress bar animations */
+.progress-bar {
+  transition: width 0.8s ease-out;
+}
+
+/* Card hover effects */
+.subject-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.subject-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart type selector animations */
+.chart-selector-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.chart-selector-btn:hover {
+  transform: translateY(-1px);
+}
+
+.chart-selector-btn.active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+/* Export menu animations */
+.export-menu {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading spinner */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design enhancements */
+@media (max-width: 768px) {
+  .chart-selector {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .chart-selector-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .header-content {
+    text-align: center;
+  }
+  
+  .export-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .performance-comparison {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .card {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .text-gray-900 {
+    color: #ffffff;
+  }
+  
+  .text-gray-600 {
+    color: #d1d5db;
+  }
+  
+  .border-gray-200 {
+    border-color: #404040;
+  }
+}
+
+/* Custom scrollbar */
+.performance-comparison ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.performance-comparison ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.performance-comparison ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.performance-comparison ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Tooltip enhancements */
+.custom-tooltip {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Performance indicator colors */
+.performance-excellent {
+  color: #34A853;
+}
+
+.performance-good {
+  color: #1A73E8;
+}
+
+.performance-average {
+  color: #FBBC05;
+}
+
+.performance-poor {
+  color: #EA4335;
+}
+
+/* Gradient backgrounds */
+.gradient-blue {
+  background: linear-gradient(135deg, #1A73E8 0%, #4285F4 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, #34A853 0%, #0F9D58 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, #FBBC05 0%, #F4B400 100%);
+}
+
+.gradient-error {
+  background: linear-gradient(135deg, #EA4335 0%, #D93025 100%);
+}
+
+/* Chart animations */
+.recharts-wrapper {
+  transition: all 0.3s ease-in-out;
+}
+
+.recharts-wrapper:hover {
+  transform: scale(1.02);
+}
+
+/* Button states */
+.btn-primary {
+  background: linear-gradient(135deg, #1A73E8 0%, #4285F4 100%);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for accessibility */
+button:focus,
+select:focus {
+  outline: 2px solid #1A73E8;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-gray-200 {
+    border-color: #000000;
+  }
+  
+  .text-gray-600 {
+    color: #000000;
+  }
+  
+  .bg-gray-50 {
+    background-color: #ffffff;
+  }
+}
