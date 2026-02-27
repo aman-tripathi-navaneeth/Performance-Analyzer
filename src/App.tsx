@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,10 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Index from "./pages/Index";
-import AcademicAnalyzer from "./pages/AcademicAnalyzer";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import FacultyLoginPage from "./pages/FacultyLoginPage";
+import StudentLoginPage from "./pages/StudentLoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
 import TrainingAnalyzer from "./pages/TrainingAnalyzer";
 import PlacementHub from "./pages/PlacementHub";
-import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -30,10 +32,21 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/academic-analyzer" element={<AcademicAnalyzer />} />
-            <Route path="/placement-hub" element={<PlacementHub />} />
-            <Route path="/training-analyzer" element={<TrainingAnalyzer />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-login" element={<AdminLoginPage />} />
+            <Route path="/faculty-login" element={<FacultyLoginPage />} />
+            <Route path="/student-login" element={<StudentLoginPage />} />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute allowedRole="admin" />}>
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRole="faculty" />}>
+              <Route path="/faculty-dashboard" element={<TrainingAnalyzer />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRole="student" />}>
+              <Route path="/student-dashboard" element={<PlacementHub />} />
+            </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
