@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Index from "./pages/Index";
+import AcademicAnalyzer from "./pages/AcademicAnalyzer";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import FacultyLoginPage from "./pages/FacultyLoginPage";
 import StudentLoginPage from "./pages/StudentLoginPage";
@@ -32,6 +33,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/academic-analyzer" element={<AcademicAnalyzer />} />
             <Route path="/admin-login" element={<AdminLoginPage />} />
             <Route path="/faculty-login" element={<FacultyLoginPage />} />
             <Route path="/student-login" element={<StudentLoginPage />} />
@@ -42,9 +44,11 @@ const App = () => (
             </Route>
             <Route element={<ProtectedRoute allowedRole="faculty" />}>
               <Route path="/faculty-dashboard" element={<TrainingAnalyzer />} />
+              <Route path="/training-analyzer" element={<TrainingAnalyzer />} />
             </Route>
             <Route element={<ProtectedRoute allowedRole="student" />}>
               <Route path="/student-dashboard" element={<PlacementHub />} />
+              <Route path="/placement-hub" element={<PlacementHub />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
