@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Users, BookOpen, Activity, School, Briefcase } from 'lucide-react';
+import { Settings, Users, BookOpen, Activity, School, Briefcase, LayoutGrid } from 'lucide-react';
 import FacultyManagement from './FacultyManagement';
 import StudentData from './StudentData';
-import SystemSettings from './SystemSettings';
 import PlacementManagement from './PlacementManagement';
+import ManageSections from './ManageSections';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("faculty");
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
             System management and configuration panel
           </p>
         </div>
-        
+
         <ToggleGroup type="single" value={viewMode} onValueChange={(val) => val && setViewMode(val)}>
           <ToggleGroupItem value="management" aria-label="Management View">
             <Settings className="h-4 w-4 mr-2" />
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
             <p className="text-xs text-muted-foreground">Active faculty members</p>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-secondary/5 backdrop-blur-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center">
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
             <p className="text-xs text-muted-foreground">Registered students</p>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-secondary/5 backdrop-blur-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center">
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
             <p className="text-xs text-muted-foreground">Active subjects</p>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-secondary/5 backdrop-blur-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center">
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
       </div>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="mb-6 w-full justify-start overflow-x-auto">
           <TabsTrigger value="faculty" className="flex items-center gap-2">
@@ -107,26 +107,26 @@ const AdminDashboard = () => {
             <Briefcase size={16} />
             Placement Hub
           </TabsTrigger>
-          <TabsTrigger value="settings" className="flex items-center gap-2">
-            <Settings size={16} />
-            System Settings
+          <TabsTrigger value="sections" className="flex items-center gap-2">
+            <LayoutGrid size={16} />
+            Manage Sections
           </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="faculty">
           <FacultyManagement />
         </TabsContent>
-        
+
         <TabsContent value="students">
           <StudentData />
         </TabsContent>
-        
+
         <TabsContent value="placement">
           <PlacementManagement />
         </TabsContent>
-        
-        <TabsContent value="settings">
-          <SystemSettings />
+
+        <TabsContent value="sections">
+          <ManageSections />
         </TabsContent>
       </Tabs>
     </div>

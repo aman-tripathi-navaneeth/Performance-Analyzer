@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Briefcase, Calendar, Award, ExternalLink, Upload, UserCircle, Camera, Check, UploadCloud } from 'lucide-react';
 import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StudentTestView } from '../components/student/StudentTestView';
 
 const PlacementHub = () => {
   const navigate = useNavigate();
@@ -43,7 +44,9 @@ const PlacementHub = () => {
     name: "Rahul Kumar",
     rollNumber: username || "216K1A0501",
     batch: "2021-2025",
-    branch: "CSE",
+    year: "Third Year",
+    branch: "CSC", // Hardcoded to match our initial mock data
+    section: "A",
     email: "rahul.k@student.ideal.edu"
   };
 
@@ -277,6 +280,10 @@ const PlacementHub = () => {
                 <Briefcase size={16} />
                 Available Jobs
               </TabsTrigger>
+              <TabsTrigger value="tests" className="flex items-center gap-2">
+                <Award size={16} />
+                Available Tests
+              </TabsTrigger>
               <TabsTrigger value="applications" className="flex items-center gap-2">
                 <Calendar size={16} />
                 Track Applications
@@ -343,6 +350,14 @@ const PlacementHub = () => {
               </div>
             </TabsContent>
 
+            <TabsContent value="tests" className="space-y-6">
+              <StudentTestView
+                year={studentData.year}
+                branch={studentData.branch}
+                section={studentData.section}
+              />
+            </TabsContent>
+
             <TabsContent value="applications">
               <Card className="cosmic-card overflow-hidden">
                 <CardHeader>
@@ -373,9 +388,9 @@ const PlacementHub = () => {
                             <TableCell>{format(app.applicationDate, 'MMM d, yyyy')}</TableCell>
                             <TableCell>
                               <span className={`px-2 py-1 rounded-full text-xs ${app.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-500' :
-                                  app.status === 'Shortlisted' ? 'bg-green-500/20 text-green-500' :
-                                    app.status === 'Rejected' ? 'bg-red-500/20 text-red-500' :
-                                      'bg-blue-500/20 text-blue-500'
+                                app.status === 'Shortlisted' ? 'bg-green-500/20 text-green-500' :
+                                  app.status === 'Rejected' ? 'bg-red-500/20 text-red-500' :
+                                    'bg-blue-500/20 text-blue-500'
                                 }`}>
                                 {app.status}
                               </span>

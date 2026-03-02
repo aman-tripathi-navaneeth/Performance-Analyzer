@@ -1,4 +1,3 @@
-
 // Define types for student data
 export interface Student {
   id: string;
@@ -11,52 +10,24 @@ export interface Student {
   feedback: string;
 }
 
-// Define types for the nested data structure
-export interface RegulationData {
-  [regulation: string]: Student[];
+export interface SubjectMarks {
+  subjectName: string;
+  marks: number;
 }
 
-export interface BranchData {
-  [branch: string]: RegulationData;
-}
-
-export interface YearData {
-  [year: string]: BranchData;
-}
-
-// Roll Number Range Filter
-export interface RollNumberRange {
-  start: string;
-  end: string;
-}
-
-// Mapping for faculty usernames to their details
-export interface FacultyDetail {
+export interface StudentPerformance {
+  rollNumber: string;
   name: string;
-  subject: string;
+  subjects: SubjectMarks[];
+  totalMarks: number;
+  averageMarks: number;
 }
 
-export interface FacultyDetailsMap {
-  [key: string]: FacultyDetail;
-}
-
-export const performanceLevels = [
-  { value: 'excellent', label: 'Excellent' },
-  { value: 'good', label: 'Good' },
-  { value: 'average', label: 'Average' },
-  { value: 'decent', label: 'Decent' },
-  { value: 'bad', label: 'Bad' },
-];
-
-export interface SessionRecord {
-  id: string;
-  date: string;
+export interface ClassPerformanceData {
+  year: string;
   branch: string;
-  regulation: string;
-  subject: string;
-  testConducted: string;
-  studentsAppeared: string[];
-  rollRange?: RollNumberRange;
+  section: string;
+  students: StudentPerformance[];
 }
 
 // New interface for CSV Student Data
@@ -69,7 +40,13 @@ export interface CSVStudentData {
 }
 
 // Branch options
-export const branchOptions = ["CSE", "CSM", "MECH", "CIVIL", "ECE"];
+export const branchOptions = ["CSE", "CSC", "COS", "MECH", "CIVIL", "ECE"];
+
+// Year Options
+export const yearOptions = ["First Year", "Second Year", "Third Year", "Fourth Year"];
 
 // Regulation options
 export const regulationOptions = ["R20", "R19", "R18", "R22"];
+
+// Subject options
+export const subjectOptions = ["Python", "Java", "Operating Systems", "Databases", "Computer Networks", "C", "C++"];
