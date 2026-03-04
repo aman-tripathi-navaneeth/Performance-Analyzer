@@ -5,12 +5,8 @@ import Navbar from '../components/Navbar';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Briefcase, Calendar, Award, ExternalLink, Upload, UserCircle, Camera, Check, UploadCloud } from 'lucide-react';
+import { Briefcase, Award, ExternalLink, UserCircle, Camera } from 'lucide-react';
 import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { StudentTestView } from '../components/student/StudentTestView';
@@ -19,12 +15,8 @@ const PlacementHub = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [activeTab, setActiveTab] = useState('jobs');
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [certificates, setCertificates] = useState<{ name: string, date: Date }[]>([]);
-  const [certName, setCertName] = useState('');
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const certificateFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const userStr = localStorage.getItem('user');
@@ -86,67 +78,11 @@ const PlacementHub = () => {
     }
   ];
 
-  const applications = [
-    {
-      id: '1',
-      company: 'TechSolutions Inc.',
-      applicationDate: new Date('2025-04-05'),
-      status: 'Pending'
-    },
-    {
-      id: '2',
-      company: 'Innovate Systems',
-      applicationDate: new Date('2025-04-03'),
-      status: 'Shortlisted'
-    }
-  ];
-
   const handleLogout = () => {
     localStorage.removeItem('user');
     setProfilePicture(null);
     toast.success('Logged out successfully');
     navigate('/');
-  };
-
-  const handleStatusUpdate = (id: string, newStatus: string) => {
-    toast.success(`Application status updated to: ${newStatus}`);
-  };
-
-  const handleCertificateUpload = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!certName.trim()) {
-      toast.error('Please enter a certificate name');
-      return;
-    }
-
-    if (certificateFileRef.current?.files?.length) {
-      // Simulate upload progress
-      let progress = 0;
-      setUploadProgress(progress);
-
-      const interval = setInterval(() => {
-        progress += 10;
-        setUploadProgress(progress);
-
-        if (progress >= 100) {
-          clearInterval(interval);
-          setCertificates([...certificates, { name: certName, date: new Date() }]);
-          setCertName('');
-          setUploadProgress(0);
-          toast.success('Certificate uploaded successfully');
-
-          // Reset file input
-          if (certificateFileRef.current) {
-            certificateFileRef.current.value = '';
-          }
-
-          // Switch to certificates tab to show the upload result
-          setActiveTab('certificates');
-        }
-      }, 200);
-    } else {
-      toast.error('Please select a file to upload');
-    }
   };
 
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -284,14 +220,7 @@ const PlacementHub = () => {
                 <Award size={16} />
                 Available Tests
               </TabsTrigger>
-              <TabsTrigger value="applications" className="flex items-center gap-2">
-                <Calendar size={16} />
-                Track Applications
-              </TabsTrigger>
-              <TabsTrigger value="certificates" className="flex items-center gap-2">
-                <Award size={16} />
-                Certificates
-              </TabsTrigger>
+
             </TabsList>
 
             <TabsContent value="jobs" className="space-y-6">
@@ -358,193 +287,7 @@ const PlacementHub = () => {
               />
             </TabsContent>
 
-            <TabsContent value="applications">
-              <Card className="cosmic-card overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calendar size={20} />
-                    Your Applications
-                  </CardTitle>
-                  <CardDescription>
-                    Track and manage your job applications
-                  </CardDescription>
-                </CardHeader>
 
-                <CardContent>
-                  {applications.length > 0 ? (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Company</TableHead>
-                          <TableHead>Application Date</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {applications.map(app => (
-                          <TableRow key={app.id}>
-                            <TableCell className="font-medium">{app.company}</TableCell>
-                            <TableCell>{format(app.applicationDate, 'MMM d, yyyy')}</TableCell>
-                            <TableCell>
-                              <span className={`px-2 py-1 rounded-full text-xs ${app.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-500' :
-                                app.status === 'Shortlisted' ? 'bg-green-500/20 text-green-500' :
-                                  app.status === 'Rejected' ? 'bg-red-500/20 text-red-500' :
-                                    'bg-blue-500/20 text-blue-500'
-                                }`}>
-                                {app.status}
-                              </span>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <Select
-                                onValueChange={(value) => handleStatusUpdate(app.id, value)}
-                                defaultValue={app.status}
-                              >
-                                <SelectTrigger className="w-32 h-8">
-                                  <SelectValue placeholder="Update" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="Pending">Pending</SelectItem>
-                                  <SelectItem value="Shortlisted">Shortlisted</SelectItem>
-                                  <SelectItem value="Rejected">Rejected</SelectItem>
-                                  <SelectItem value="Withdrawn">Withdrawn</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  ) : (
-                    <div className="bg-secondary/10 rounded-lg p-8 text-center">
-                      <Calendar className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
-                      <h3 className="text-lg font-medium mb-1">No applications yet</h3>
-                      <p className="text-muted-foreground mb-4">
-                        Start by applying to available job openings
-                      </p>
-                      <Button
-                        onClick={() => setActiveTab('jobs')}
-                        className="bg-cosmic-500 hover:bg-cosmic-600 text-white"
-                      >
-                        <Briefcase size={14} className="mr-2" />
-                        Browse Jobs
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="certificates">
-              <Card className="cosmic-card overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Award size={20} />
-                    Professional Certificates
-                  </CardTitle>
-                  <CardDescription>
-                    Manage your professional certifications and achievements
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="space-y-6">
-                    <form onSubmit={handleCertificateUpload} className="space-y-4 p-4 bg-secondary/10 rounded-lg">
-                      <h3 className="text-lg font-medium">Upload New Certificate</h3>
-
-                      <div className="grid grid-cols-1 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="certName">Certificate Name</Label>
-                          <Input
-                            id="certName"
-                            value={certName}
-                            onChange={(e) => setCertName(e.target.value)}
-                            placeholder="e.g. AWS Certified Developer"
-                            className="bg-secondary/5"
-                            required
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="certFile">Certificate File</Label>
-                          <div className="border-2 border-dashed border-primary/20 rounded-lg p-6 text-center hover:bg-secondary/20 transition-colors">
-                            <input
-                              type="file"
-                              ref={certificateFileRef}
-                              id="certFile"
-                              className="hidden"
-                              accept=".pdf,.jpg,.jpeg,.png"
-                              required
-                            />
-                            <div
-                              className="flex flex-col items-center justify-center cursor-pointer"
-                              onClick={() => certificateFileRef.current?.click()}
-                            >
-                              <UploadCloud size={36} className="text-muted-foreground mb-2" />
-                              <p className="text-sm text-muted-foreground mb-1">
-                                Click to upload or drag and drop
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                PDF, JPG or PNG (max. 10MB)
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {uploadProgress > 0 && (
-                        <div className="w-full bg-secondary/20 rounded-full h-2 mt-2">
-                          <div
-                            className="bg-cosmic-500 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${uploadProgress}%` }}
-                          />
-                        </div>
-                      )}
-
-                      <Button
-                        type="submit"
-                        className="w-full bg-cosmic-500 hover:bg-cosmic-600 text-white"
-                        disabled={uploadProgress > 0}
-                      >
-                        <Upload size={14} className="mr-2" />
-                        Upload Certificate
-                      </Button>
-                    </form>
-
-                    {certificates.length > 0 ? (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Certificate Name</TableHead>
-                            <TableHead>Upload Date</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {certificates.map((cert, index) => (
-                            <TableRow key={index}>
-                              <TableCell className="font-medium">{cert.name}</TableCell>
-                              <TableCell>{format(cert.date, 'MMM d, yyyy')}</TableCell>
-                              <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">View</Button>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    ) : (
-                      <div className="bg-secondary/10 rounded-lg p-8 text-center">
-                        <Award className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
-                        <h3 className="text-lg font-medium mb-1">No certificates yet</h3>
-                        <p className="text-muted-foreground">
-                          Upload your first certificate to showcase your skills.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
         </div>
       </div>

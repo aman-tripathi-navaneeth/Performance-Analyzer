@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -14,33 +14,33 @@ import { format } from "date-fns";
 
 // Mock data for jobs
 const initialJobs = [
-  { 
-    id: '1', 
-    companyName: 'TechCorp', 
-    package: '10 LPA', 
-    minPercentage: 75, 
-    certificationRequired: true, 
-    certificationName: 'AWS Developer', 
+  {
+    id: '1',
+    companyName: 'TechCorp',
+    package: '10 LPA',
+    minPercentage: 75,
+    certificationRequired: true,
+    certificationName: 'AWS Developer',
     jobUrl: 'https://example.com/techjob',
     lastDate: new Date('2025-05-15')
   },
-  { 
-    id: '2', 
-    companyName: 'InnovateSoft', 
-    package: '8 LPA', 
-    minPercentage: 70, 
-    certificationRequired: false, 
-    certificationName: '', 
+  {
+    id: '2',
+    companyName: 'InnovateSoft',
+    package: '8 LPA',
+    minPercentage: 70,
+    certificationRequired: false,
+    certificationName: '',
     jobUrl: 'https://example.com/innosoft',
     lastDate: new Date('2025-05-20')
   },
-  { 
-    id: '3', 
-    companyName: 'CloudSystems', 
-    package: '12 LPA', 
-    minPercentage: 80, 
-    certificationRequired: true, 
-    certificationName: 'Azure Fundamentals', 
+  {
+    id: '3',
+    companyName: 'CloudSystems',
+    package: '12 LPA',
+    minPercentage: 80,
+    certificationRequired: true,
+    certificationName: 'Azure Fundamentals',
     jobUrl: 'https://example.com/cloudsys',
     lastDate: new Date('2025-04-30')
   }
@@ -48,45 +48,45 @@ const initialJobs = [
 
 // Mock data for applications
 const initialApplications = [
-  { 
-    id: '1', 
-    rollNumber: '216K1A0501', 
-    name: 'Rahul Kumar', 
-    email: 'rahul.k@student.ideal.edu', 
-    branch: 'CSE', 
-    company: 'TechCorp', 
-    applyDate: new Date('2025-03-20'), 
-    status: 'Applied' 
+  {
+    id: '1',
+    rollNumber: '216K1A0501',
+    name: 'Rahul Kumar',
+    email: 'rahul.k@student.ideal.edu',
+    branch: 'CSE',
+    company: 'TechCorp',
+    applyDate: new Date('2025-03-20'),
+    status: 'Applied'
   },
-  { 
-    id: '2', 
-    rollNumber: '216K1A0502', 
-    name: 'Priya Sharma', 
-    email: 'priya.s@student.ideal.edu', 
-    branch: 'CSE', 
-    company: 'TechCorp', 
-    applyDate: new Date('2025-03-21'), 
-    status: 'Shortlisted' 
+  {
+    id: '2',
+    rollNumber: '216K1A0502',
+    name: 'Priya Sharma',
+    email: 'priya.s@student.ideal.edu',
+    branch: 'CSE',
+    company: 'TechCorp',
+    applyDate: new Date('2025-03-21'),
+    status: 'Shortlisted'
   },
-  { 
-    id: '3', 
-    rollNumber: '226K1A0503', 
-    name: 'Aditya Singh', 
-    email: 'aditya.s@student.ideal.edu', 
-    branch: 'CS', 
-    company: 'InnovateSoft', 
-    applyDate: new Date('2025-03-19'), 
-    status: 'Rejected' 
+  {
+    id: '3',
+    rollNumber: '226K1A0503',
+    name: 'Aditya Singh',
+    email: 'aditya.s@student.ideal.edu',
+    branch: 'CS',
+    company: 'InnovateSoft',
+    applyDate: new Date('2025-03-19'),
+    status: 'Rejected'
   },
-  { 
-    id: '4', 
-    rollNumber: '236K1A0504', 
-    name: 'Neha Patel', 
-    email: 'neha.p@student.ideal.edu', 
-    branch: 'CSE', 
-    company: 'CloudSystems', 
-    applyDate: new Date('2025-03-22'), 
-    status: 'Pending' 
+  {
+    id: '4',
+    rollNumber: '236K1A0504',
+    name: 'Neha Patel',
+    email: 'neha.p@student.ideal.edu',
+    branch: 'CSE',
+    company: 'CloudSystems',
+    applyDate: new Date('2025-03-22'),
+    status: 'Pending'
   }
 ];
 
@@ -101,16 +101,44 @@ type JobFormData = {
   lastDate: Date;
 }
 
+const STORAGE_KEY_JOBS = 'admin_jobs';
+
 const PlacementManagement = () => {
   const [activeTab, setActiveTab] = useState("jobs");
-  const [jobs, setJobs] = useState(initialJobs);
+
+  // Initialize jobs from local storage or fallback to mock data
+  const [jobs, setJobs] = useState(() => {
+    try {
+      const storedJobs = localStorage.getItem(STORAGE_KEY_JOBS);
+      if (storedJobs) {
+        // Hydrate the stringified dates back into Date objects natively
+        return JSON.parse(storedJobs).map((job: any) => ({
+          ...job,
+          lastDate: new Date(job.lastDate)
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to load jobs from localStorage", error);
+    }
+    return initialJobs;
+  });
+
+  // Effect to persist jobs back to localStorage whenever it natively mutates
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_JOBS, JSON.stringify(jobs));
+    } catch (error) {
+      console.error("Failed to save jobs to localStorage", error);
+    }
+  }, [jobs]);
+
   const [applications, setApplications] = useState(initialApplications);
   const [showJobForm, setShowJobForm] = useState(false);
   const [applicationFilter, setApplicationFilter] = useState("all");
   const [branchFilter, setBranchFilter] = useState("all");
   const [companyFilter, setCompanyFilter] = useState("all");
   const [yearFilter, setYearFilter] = useState("all");
-  
+
   // Job form state
   const [jobFormData, setJobFormData] = useState<JobFormData>({
     companyName: '',
@@ -121,7 +149,7 @@ const PlacementManagement = () => {
     jobUrl: '',
     lastDate: new Date()
   });
-  
+
   const [editJobId, setEditJobId] = useState<string | null>(null);
   const [selectedCompanyForNotification, setSelectedCompanyForNotification] = useState('');
 
@@ -149,10 +177,10 @@ const PlacementManagement = () => {
   // Add or update job
   const handleSubmitJob = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (editJobId) {
       // Update existing job
-      setJobs(jobs.map(job => 
+      setJobs(jobs.map(job =>
         job.id === editJobId ? { ...jobFormData, id: editJobId } : job
       ));
       toast.success("Job updated successfully");
@@ -165,7 +193,7 @@ const PlacementManagement = () => {
       setJobs([...jobs, newJob]);
       toast.success("New job posted successfully");
     }
-    
+
     // Reset form
     setShowJobForm(false);
     setEditJobId(null);
@@ -202,14 +230,14 @@ const PlacementManagement = () => {
       toast.error("Please select a company");
       return;
     }
-    
+
     toast.success(`Notifications sent to students about ${selectedCompanyForNotification} job opportunity`);
     setSelectedCompanyForNotification('');
   };
 
   // Update application status
   const handleUpdateStatus = (id: string, newStatus: string) => {
-    setApplications(applications.map(app => 
+    setApplications(applications.map(app =>
       app.id === id ? { ...app, status: newStatus } : app
     ));
     toast.success("Application status updated");
@@ -222,7 +250,7 @@ const PlacementManagement = () => {
     const matchesCompany = companyFilter === "all" || app.company === companyFilter;
     const studentYear = getStudentYear(app.rollNumber);
     const matchesYear = yearFilter === "all" || studentYear === yearFilter;
-    
+
     return matchesStatus && matchesBranch && matchesCompany && matchesYear;
   });
 
@@ -243,11 +271,11 @@ const PlacementManagement = () => {
             Applications
           </TabsTrigger>
         </TabsList>
-        
+
         {/* Job Postings Tab */}
         <TabsContent value="jobs" className="space-y-4">
           <div className="flex justify-end">
-            <Button 
+            <Button
               onClick={() => {
                 setEditJobId(null);
                 setJobFormData({
@@ -267,7 +295,7 @@ const PlacementManagement = () => {
               Post New Job
             </Button>
           </div>
-          
+
           {showJobForm && (
             <Card>
               <CardHeader>
@@ -281,17 +309,17 @@ const PlacementManagement = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="companyName">Company Name</Label>
-                      <Input 
+                      <Input
                         id="companyName"
                         value={jobFormData.companyName}
                         onChange={(e) => handleJobFormChange('companyName', e.target.value)}
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="package">Package Offered</Label>
-                      <Input 
+                      <Input
                         id="package"
                         value={jobFormData.package}
                         onChange={(e) => handleJobFormChange('package', e.target.value)}
@@ -299,10 +327,10 @@ const PlacementManagement = () => {
                         placeholder="e.g., 10 LPA"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="minPercentage">Minimum Percentage Required</Label>
-                      <Input 
+                      <Input
                         id="minPercentage"
                         type="number"
                         min="0"
@@ -312,10 +340,10 @@ const PlacementManagement = () => {
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="jobUrl">Job URL</Label>
-                      <Input 
+                      <Input
                         id="jobUrl"
                         type="url"
                         value={jobFormData.jobUrl}
@@ -324,35 +352,35 @@ const PlacementManagement = () => {
                         placeholder="https://..."
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="lastDate">Last Date to Apply</Label>
-                      <Input 
+                      <Input
                         id="lastDate"
                         type="date"
-                        value={jobFormData.lastDate instanceof Date 
-                          ? jobFormData.lastDate.toISOString().split('T')[0] 
+                        value={jobFormData.lastDate instanceof Date
+                          ? jobFormData.lastDate.toISOString().split('T')[0]
                           : ''
                         }
                         onChange={(e) => handleJobFormChange('lastDate', new Date(e.target.value))}
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <Label htmlFor="certificationRequired">Certification Required</Label>
-                        <Switch 
+                        <Switch
                           id="certificationRequired"
                           checked={jobFormData.certificationRequired}
                           onCheckedChange={(checked) => handleJobFormChange('certificationRequired', checked)}
                         />
                       </div>
-                      
+
                       {jobFormData.certificationRequired && (
                         <div className="pt-2">
                           <Label htmlFor="certificationName">Certification Name</Label>
-                          <Input 
+                          <Input
                             id="certificationName"
                             value={jobFormData.certificationName}
                             onChange={(e) => handleJobFormChange('certificationName', e.target.value)}
@@ -363,11 +391,11 @@ const PlacementManagement = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-end gap-2 pt-2">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
+                    <Button
+                      type="button"
+                      variant="outline"
                       onClick={() => setShowJobForm(false)}
                     >
                       Cancel
@@ -380,7 +408,7 @@ const PlacementManagement = () => {
               </CardContent>
             </Card>
           )}
-          
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -397,7 +425,7 @@ const PlacementManagement = () => {
                   <TableCell className="font-medium">{job.companyName}</TableCell>
                   <TableCell>{job.package}</TableCell>
                   <TableCell>{
-                    job.lastDate instanceof Date 
+                    job.lastDate instanceof Date
                       ? format(job.lastDate, 'dd MMM yyyy')
                       : 'Invalid date'
                   }</TableCell>
@@ -412,15 +440,15 @@ const PlacementManagement = () => {
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="icon"
                       onClick={() => handleEditJob(job.id)}
                     >
                       <Edit size={16} />
                     </Button>
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="icon"
                       onClick={() => handleDeleteJob(job.id)}
                     >
@@ -432,7 +460,7 @@ const PlacementManagement = () => {
             </TableBody>
           </Table>
         </TabsContent>
-        
+
         {/* Notify Students Tab */}
         <TabsContent value="notify" className="space-y-4">
           <Card>
@@ -446,7 +474,7 @@ const PlacementManagement = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="companySelect">Select Company</Label>
-                  <Select 
+                  <Select
                     value={selectedCompanyForNotification}
                     onValueChange={setSelectedCompanyForNotification}
                   >
@@ -462,8 +490,8 @@ const PlacementManagement = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
-                <Button 
+
+                <Button
                   onClick={handleSendNotifications}
                   disabled={!selectedCompanyForNotification}
                   className="w-full"
@@ -475,15 +503,15 @@ const PlacementManagement = () => {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {/* Applications Tab */}
         <TabsContent value="applications" className="space-y-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h3 className="text-lg font-medium">Student Applications</h3>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
+
+            <Button
+              variant="outline"
+              size="sm"
               className="flex items-center gap-2"
               onClick={() => {
                 // Reset all filters
@@ -497,7 +525,7 @@ const PlacementManagement = () => {
               Reset Filters
             </Button>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             {/* Status Filter */}
             <div>
@@ -515,7 +543,7 @@ const PlacementManagement = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             {/* Branch Filter */}
             <div>
               <Label htmlFor="branchFilter" className="mb-2 block">Branch</Label>
@@ -531,7 +559,7 @@ const PlacementManagement = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             {/* Company Filter */}
             <div>
               <Label htmlFor="companyFilter" className="mb-2 block">Company</Label>
@@ -547,7 +575,7 @@ const PlacementManagement = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             {/* Year Filter */}
             <div>
               <Label htmlFor="yearFilter" className="mb-2 block">Year</Label>
@@ -565,7 +593,7 @@ const PlacementManagement = () => {
               </Select>
             </div>
           </div>
-          
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -592,17 +620,16 @@ const PlacementManagement = () => {
                     <TableCell>{getStudentYear(app.rollNumber)}</TableCell>
                     <TableCell>{app.company}</TableCell>
                     <TableCell>{
-                      app.applyDate instanceof Date 
+                      app.applyDate instanceof Date
                         ? format(app.applyDate, 'dd MMM yyyy')
                         : 'Invalid date'
                     }</TableCell>
                     <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        app.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-600' :
-                        app.status === 'Applied' ? 'bg-blue-500/20 text-blue-600' :
-                        app.status === 'Shortlisted' ? 'bg-green-500/20 text-green-600' :
-                        'bg-red-500/20 text-red-600'
-                      }`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${app.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-600' :
+                          app.status === 'Applied' ? 'bg-blue-500/20 text-blue-600' :
+                            app.status === 'Shortlisted' ? 'bg-green-500/20 text-green-600' :
+                              'bg-red-500/20 text-red-600'
+                        }`}>
                         {app.status}
                       </span>
                     </TableCell>

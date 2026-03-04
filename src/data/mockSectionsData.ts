@@ -2,8 +2,30 @@
 type Listener = () => void;
 const listeners: Set<Listener> = new Set();
 
-// Initial mock state
-let availableSections: string[] = ['A', 'B', 'C'];
+const STORAGE_KEY = 'admin_sections';
+
+// Load initial state from local storage or fallback to defaults
+const loadInitialSections = (): string[] => {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            return JSON.parse(stored);
+        }
+    } catch (e) {
+        console.error("Failed to load sections from local storage", e);
+    }
+    return ['A', 'B', 'C'];
+};
+
+let availableSections: string[] = loadInitialSections();
+
+const saveSections = (sections: string[]) => {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sections));
+    } catch (e) {
+        console.error("Failed to save sections to local storage", e);
+    }
+};
 
 export const getSections = () => {
     return [...availableSections];
@@ -18,6 +40,7 @@ export const addSection = (section: string) => {
         throw new Error("Section already exists.");
     }
     availableSections = [...availableSections, normalized].sort();
+    saveSections(availableSections);
     notifyListeners();
     return availableSections;
 };
@@ -25,6 +48,7 @@ export const addSection = (section: string) => {
 export const removeSection = (section: string) => {
     const normalized = section.trim().toUpperCase();
     availableSections = availableSections.filter(s => s !== normalized);
+    saveSections(availableSections);
     notifyListeners();
     return availableSections;
 };
