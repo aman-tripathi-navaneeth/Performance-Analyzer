@@ -1,5 +1,5 @@
 
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -7,8 +7,6 @@ import FeatureCard from '../components/FeatureCard';
 import { BarChart4, Building2, BookOpen, ArrowRight } from 'lucide-react';
 
 const Index = () => {
-  const navigate = useNavigate();
-  
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -95,8 +93,8 @@ const Index = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <a 
-            href="/academic-analyzer" 
+          <Link
+            to="/academic-analyzer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full 
                       bg-secondary/20 hover:bg-secondary/30 backdrop-blur-md 
                       border border-primary/10 transition-all duration-300 
@@ -104,7 +102,7 @@ const Index = () => {
           >
             <span>Explore All Analytics Tools</span>
             <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform duration-300" />
-          </a>
+          </Link>
         </motion.div>
       </div>
       

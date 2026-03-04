@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const { theme } = useTheme();
@@ -81,14 +82,14 @@ const Hero = () => {
             >
               <span>Explore Features</span>
             </a>
-            <a 
-              href="/academic-analyzer" 
+            <Link
+              to="/academic-analyzer"
               className="px-8 py-3 rounded-full bg-secondary/30 backdrop-blur-sm border border-white/50
                        text-white font-medium shadow-lg hover:shadow-xl hover:bg-secondary/50
                        transform hover:-translate-y-1 transition-all duration-200 smooth-transition"
             >
               Get Started
-            </a>
+            </Link>
           </motion.div>
         </div>
       </motion.div>
